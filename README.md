@@ -1,9 +1,11 @@
 # Repo Scanner
 
+[![PyPI](https://img.shields.io/pypi/v/repoprobe)](https://pypi.org/project/repoprobe/)
+
 Point it at a GitHub repo and get a short summary of what it does and how it is built.
 
 ```
-pip install repo-scanner
+pip install repoprobe
 export OPENAI_API_KEY=...
 repo-scanner --repo https://github.com/pallets/flask
 ```
@@ -64,7 +66,7 @@ Every failure has a plain message and its own exit code.
 ## Web API
 
 ```
-pip install "repo-scanner[api]"
+pip install "repoprobe[api]"
 uvicorn repo_scanner.api:app
 ```
 
