@@ -12,6 +12,7 @@ EXCLUDED_DIRS = {
     ".next", "vendor", "target", ".tox", ".idea", ".vscode", "site-packages",
     ".mypy_cache", ".pytest_cache", "coverage", ".github", "migrations", "docs",
 }
+EXAMPLE_DIRS = {"examples", "example", "docs_src", "samples", "sample", "tutorials"}
 TEST_DIRS = {"test", "tests", "__tests__", "spec", "specs"}
 LOCKFILES = {
     "package-lock.json", "yarn.lock", "poetry.lock", "pnpm-lock.yaml", "cargo.lock",
@@ -44,9 +45,11 @@ def _parts(path: str) -> list[str]:
     return [p.lower() for p in PurePosixPath(path).parts]
 
 
-def is_excluded(path: str) -> bool:
-    parts = _parts(path)
-    return any(p in EXCLUDED_DIRS for p in parts[:-1])
+def is_excluded(path: str, skip_examples: bool = True) -> bool:
+    parts = _parts(path)[:-1]
+    if any(p in EXCLUDED_DIRS for p in parts):
+        return True
+    return skip_examples and any(p in EXAMPLE_DIRS for p in parts)
 
 
 def is_test(path: str) -> bool:
@@ -58,12 +61,12 @@ def is_test(path: str) -> bool:
             ".spec.js", ".spec.ts", "_test.go")))
 
 
-def eligible(entries: list[TreeEntry]) -> list[TreeEntry]:
+def eligible(entries: list[TreeEntry], skip_examples: bool = True) -> list[TreeEntry]:
     """Files that could ever be useful: not excluded, not tests, not locks."""
     out = []
     for e in entries:
         name = PurePosixPath(e.path).name.lower()
-        if is_excluded(e.path) or is_test(e.path) or name in LOCKFILES:
+        if is_excluded(e.path, skip_examples) or is_test(e.path) or name in LOCKFILES:
             continue
         out.append(e)
     return out
@@ -76,6 +79,8 @@ def _is_source(path: str) -> bool:
 def select_files(entries: list[TreeEntry], depth: int = 2) -> list[Selected]:
     """README, one manifest, one entry point, then `depth` more source files."""
     files = eligible(entries)
+    if not any(_is_source(e.path) for e in files):
+        files = eligible(entries, skip_examples=False)  # a repo that is only examples
     chosen: list[Selected] = []
     seen: set[str] = set()
 

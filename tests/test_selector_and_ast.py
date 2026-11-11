@@ -58,3 +58,17 @@ def test_outline_returns_none_on_syntax_error():
 
 def test_outline_handles_empty_file():
     assert outline_python("") == ""
+
+
+def test_example_and_docs_source_folders_are_skipped():
+    tree = [TreeEntry("README.md", 500), TreeEntry("pyproject.toml", 200),
+            TreeEntry("examples/main.py", 900), TreeEntry("docs_src/app/main.py", 900),
+            TreeEntry("src/pkg/core.py", 3000)]
+    paths = [s.path for s in select_files(tree, depth=3)]
+    assert "src/pkg/core.py" in paths
+    assert not any(p.startswith(("examples/", "docs_src/")) for p in paths)
+
+
+def test_repo_made_only_of_examples_still_gets_files():
+    tree = [TreeEntry("README.md", 500), TreeEntry("examples/main.py", 900)]
+    assert "examples/main.py" in [s.path for s in select_files(tree, depth=2)]

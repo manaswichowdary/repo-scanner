@@ -84,19 +84,19 @@ Measured on 10 public repos, depth 2, full run with gpt-4o-mini. Tokens are esti
 
 | Repo | Seconds | Files read | Tokens sent | Cut from AST outlines | Cut vs the same files raw | Cut vs every eligible file |
 |---|---|---|---|---|---|---|
-| pallets/flask | 4.9 | 5 | 2,368 | 47% | 92% | 98% |
-| psf/requests | 4.5 | 4 | 2,231 | 39% | 84% | 100% |
-| tiangolo/fastapi | 6.6 | 5 | 2,858 | 35% | 81% | 99% |
-| Textualize/rich | 4.4 | 5 | 2,979 | 38% | 84% | 100% |
-| encode/httpx | 5.6 | 4 | 3,551 | 16% | 83% | 96% |
-| pallets/click | 5.0 | 5 | 2,502 | 36% | 84% | 98% |
-| expressjs/express | 5.1 | 5 | 3,166 | 0% | 54% | 95% |
-| tj/commander.js | 4.9 | 5 | 3,621 | 0% | 80% | 96% |
-| axios/axios | 4.4 | 5 | 4,269 | 0% | 86% | 98% |
-| gin-gonic/gin | 4.3 | 4 | 3,728 | 0% | 60% | 96% |
+| pallets/flask | 5.8 | 5 | 2,368 | 47% | 92% | 98% |
+| psf/requests | 4.7 | 4 | 2,231 | 39% | 84% | 100% |
+| tiangolo/fastapi | 6.1 | 5 | 2,849 | 34% | 81% | 99% |
+| Textualize/rich | 4.6 | 5 | 2,979 | 38% | 84% | 100% |
+| encode/httpx | 5.9 | 4 | 3,551 | 16% | 83% | 96% |
+| pallets/click | 4.7 | 4 | 2,426 | 31% | 85% | 98% |
+| expressjs/express | 5.3 | 5 | 4,064 | 0% | 69% | 92% |
+| tj/commander.js | 5.4 | 5 | 3,621 | 0% | 80% | 96% |
+| axios/axios | 4.2 | 5 | 3,368 | 0% | 89% | 98% |
+| gin-gonic/gin | 4.6 | 4 | 3,728 | 0% | 60% | 96% |
 
-- Time: median 4.9 s, slowest 6.6 s. 10 of 10 finished under 15 s.
-- Token cut from AST outlines alone, against the same files sent as truncated raw text (Python repos, 6 of them): median 37%. Against the same files in full: median 84%.
+- Time: median 5.0 s, slowest 6.1 s. 10 of 10 finished under 15 s.
+- Token cut from AST outlines alone, against the same files sent as truncated raw text (Python repos, 6 of them): median 36%. Against the same files in full: median 84%.
 - Token cut against sending every eligible file: median 98% (an estimate, not a model count).
 <!-- RESULTS:END -->
 
